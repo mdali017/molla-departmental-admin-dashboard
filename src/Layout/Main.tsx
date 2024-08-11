@@ -1,7 +1,7 @@
-import React from "react";
+// import React from "react";
 import { Link, Outlet } from "react-router-dom";
-import SideBar from "../components/SideBar";
-import NavBar from "../components/NavBar";
+// import SideBar from "../components/SideBar";
+// import NavBar from "../components/NavBar";
 import { MdLogout } from "react-icons/md";
 
 const Main = () => {

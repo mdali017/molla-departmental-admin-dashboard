@@ -4,11 +4,11 @@ import Main from "../Layout/Main";
 
 export const router = createBrowserRouter([
   {
-    path: "/dashboard",
+    path: "/",
     element: <Main />,
     children: [
       {
-        path: "admin-dashboard",
+        path: "/",
         element: <Dashboard />,
       },
     ],

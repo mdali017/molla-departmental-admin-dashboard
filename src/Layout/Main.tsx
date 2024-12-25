@@ -10,6 +10,8 @@ import {
 import { AiOutlineAppstore } from "react-icons/ai";
 import { TiThList } from "react-icons/ti";
 import { TbReport } from "react-icons/tb";
+import { IoMdNotifications } from "react-icons/io";
+import { SiSimplenote } from "react-icons/si";
 
 const Main = () => {
   const [openSubMenu, setOpenSubMenu] = useState(null);
@@ -22,9 +24,9 @@ const Main = () => {
       link: "",
       icon: <AiOutlineAppstore />,
       subItems: [
-        { id: 22, title: "All Products", link: "/all-products" },
-        { id: 21, title: "Add New Product", link: "/add-product" },
-        { id: 23, title: "Manage Categories", link: "/manage-categories" },
+        { id: 22, title: "All Products", link: "/products" },
+        { id: 21, title: "Add New Product", link: "/add-new-product" },
+        { id: 23, title: "Manage Categories", link: "/category" },
         { id: 24, title: "Bulk Actions", link: "/bulk-actions" },
       ],
     },
@@ -136,8 +138,12 @@ const Main = () => {
           <header className="z-40 flex items-center justify-between w-full h-16 bg-slate-400">
             <button className="block ml-6 lg:hidden p-2 bg-white rounded-full shadow text-gray-500"></button>
             <div className="flex items-center justify-end w-full px-3 space-x-4">
-              <button className="p-2 bg-white rounded-full shadow text-gray-400 hover:text-gray-700"></button>
-              <button className="p-2 bg-white rounded-full shadow text-gray-400 hover:text-gray-700"></button>
+              <button className="p-1 bg-white rounded-full shadow text-gray-600 hover:text-gray-700">
+                <IoMdNotifications />
+              </button>
+              <button className="p-1 bg-white rounded-full shadow text-gray-600 hover:text-gray-700">
+                <SiSimplenote />
+              </button>
               <span className="w-1 h-8 bg-gray-200 rounded-lg"></span>
               <a href="#" className="relative block">
                 <img

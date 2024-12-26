@@ -9,7 +9,7 @@ const AddNewProduct = () => {
   const [fileList, setFileList] = useState([]);
   const [error, setError] = useState("");
 
-  const handleImageChange = ({ fileList: newFileList }: UploadChangeParam) => {
+  const handleImageChange = ({ fileList: newFileList }: any) => {
     setFileList(newFileList);
   };
 

@@ -42,6 +42,14 @@ export const baseApi = createApi({
         };
       },
     }),
+    getAllOrders: builder.query({
+      query: () => {
+        return {
+          url: `/orders`,
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 
@@ -50,4 +58,5 @@ export const {
   useAddCategoryMutation,
   useGetAllProductsQuery,
   useAddNewProductMutation,
+  useGetAllOrdersQuery,
 } = baseApi;

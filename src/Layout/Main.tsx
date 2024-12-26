@@ -36,9 +36,9 @@ const Main = () => {
       link: "",
       icon: <TiThList />,
       subItems: [
-        { id: 31, title: "Order List", link: "/order-list" },
-        { id: 32, title: "Pending Order", link: "/pending-order" },
-        { id: 33, title: "Completed Order", link: "/completed-order" },
+        { id: 31, title: "Order List", link: "/all-orders" },
+        { id: 32, title: "Processing Order", link: "/processing-order" },
+        { id: 33, title: "Completed Order", link: "/completed-orders" },
         { id: 34, title: "Returns & Refunds", link: "/returns-refunds" },
       ],
     },

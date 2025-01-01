@@ -8,6 +8,7 @@ import AllOrders from "../pages/Orders/AllOrders";
 import CompletedOrders from "../pages/Orders/CompletedOrders";
 import CanceledOrders from "../pages/Orders/CanceledOrders";
 import ProcessingOrder from "../pages/Orders/ProcessingOrder";
+import Login from "../pages/Login/Login";
 // import AllOrders from "../pages/Orders/AllOrders";
 
 export const router = createBrowserRouter([
@@ -48,5 +49,9 @@ export const router = createBrowserRouter([
         element: <CanceledOrders />,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);

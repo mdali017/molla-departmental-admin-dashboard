@@ -90,7 +90,7 @@ const AllProducts: React.FC = () => {
     {
       title: "Index", // Column for row number/index
       key: "index",
-      render: (_: any, record: DataType, index: number) => index + 1, // Display the row number (index starts from 0, so add 1)
+      render: (_: any, _record: DataType, index: number) => index + 1, // Display the row number (index starts from 0, so add 1)
     },
     {
       title: "Image",
@@ -112,7 +112,7 @@ const AllProducts: React.FC = () => {
       title: "Action",
       dataIndex: "action",
       key: "action",
-      render: (text: string, record: DataType) => (
+      render: (_text: string, record: DataType) => (
         <div className="flex items-center space-x-2">
           {/* View Details Button (Eye Icon) */}
           <Button
@@ -141,10 +141,10 @@ const AllProducts: React.FC = () => {
   ];
 
   // Handle edit functionality
-  const handleEdit = (record: DataType) => {
-    console.log("Edit product:", record);
-    // Implement your edit logic here (e.g., open a modal or navigate to an edit page)
-  };
+  // const handleEdit = (record: DataType) => {
+  //   console.log("Edit product:", record);
+  //   // Implement your edit logic here (e.g., open a modal or navigate to an edit page)
+  // };
 
   // Prepare rows from the fetched products
   const data: DataType[] = getAllProducts?.data?.map((product: any) => ({

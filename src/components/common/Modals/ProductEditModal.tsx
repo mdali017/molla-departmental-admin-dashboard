@@ -42,8 +42,7 @@ const ProductEditModal: React.FC<ProductDetailsModalProps> = ({
 
   if (!selectedProductDetails) return null;
 
-  const { name, description, price, stock, category, images } =
-    selectedProductDetails;
+  const { name, category, images } = selectedProductDetails;
 
   const handleUpdateProductData = async (values: {
     name: string;
@@ -52,19 +51,19 @@ const ProductEditModal: React.FC<ProductDetailsModalProps> = ({
     stock: number;
   }) => {
     try {
-        const formattedPrice = values.price.toFixed(2) || 0;
-      
-        const response = await updateProduct({
-          productId: selectedProductDetails.key,
-          data: {
-            ...values,
-            price: formattedPrice, // Send formatted price string
-          },
-        }).unwrap();
-  
-        message.success("Product updated successfully!");
-        setModalOpen(false);
-        form.resetFields();
+      const formattedPrice = values.price.toFixed(2) || 0;
+
+      await updateProduct({
+        productId: selectedProductDetails.key,
+        data: {
+          ...values,
+          price: formattedPrice, // Send formatted price string
+        },
+      }).unwrap();
+
+      message.success("Product updated successfully!");
+      setModalOpen(false);
+      form.resetFields();
     } catch (error) {
       message.error(
         "Failed to update product. Please try again." +
@@ -138,14 +137,14 @@ const ProductEditModal: React.FC<ProductDetailsModalProps> = ({
             <Form.Item
               name="price"
               label="Price"
-            //   rules={[
-            //     { required: true },
-            //     {
-            //       type: "number",
-            //       min: 0,
-            //       message: "Price must be greater than or equal to 0",
-            //     },
-            //   ]}
+              //   rules={[
+              //     { required: true },
+              //     {
+              //       type: "number",
+              //       min: 0,
+              //       message: "Price must be greater than or equal to 0",
+              //     },
+              //   ]}
             >
               <InputNumber
                 placeholder="Enter price"
@@ -154,7 +153,9 @@ const ProductEditModal: React.FC<ProductDetailsModalProps> = ({
                 precision={2}
                 step={0.01}
                 min={0}
-                formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                formatter={(value) =>
+                  `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }
                 // parser={value => value!.replace(/\$\s?|(,*)/g, '')}
               />
             </Form.Item>

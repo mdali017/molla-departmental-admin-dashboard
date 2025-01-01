@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { Table, Select, message, Tag } from "antd";
+import React from "react";
+import { Table, Tag } from "antd";
 import type { TableColumnsType } from "antd";
 import {
   useGetAllOrdersQuery,
-  useUpdateOrderStatusMutation,
+  // useUpdateOrderStatusMutation,
 } from "../../redux/api/api";
 
-const { Option } = Select;
+// const { Option } = Select;
 
 interface DataType {
   key: React.Key;
@@ -23,12 +23,12 @@ const CompletedOrders: React.FC = () => {
     data: getAllOrders,
     isLoading,
     isError,
-    refetch,
+    // refetch,
   } = useGetAllOrdersQuery(undefined);
-  const [updateOrderStatus] = useUpdateOrderStatusMutation();
-  const [updatingKey, setUpdatingKey] = useState<string | null>(null);
+  // const [updateOrderStatus] = useUpdateOrderStatusMutation();
+  // const [updatingKey, setUpdatingKey] = useState<string | null>(null);
 
-  // console.log(getAllOrders);
+  // console.log(updatingKey);
 
   const allCompletedOrders = getAllOrders?.data?.filter(
     (order: any) => order.orderStatus === "Delivered"
@@ -103,22 +103,22 @@ const CompletedOrders: React.FC = () => {
     })) || [];
 
   // Handle order status update
-  const handleStatusChange = async (newStatus: string, key: React.Key) => {
-    setUpdatingKey(key as string);
-    try {
-      // Pass the status as the request body
-      await updateOrderStatus({
-        data: { orderStatus: newStatus },
-        id: key as string, // Order ID
-      }).unwrap();
-      message.success("Order status updated successfully!");
-      refetch();
-    } catch (error) {
-      message.error("Failed to update order status.");
-    } finally {
-      setUpdatingKey(null);
-    }
-  };
+  // const handleStatusChange = async (newStatus: string, key: React.Key) => {
+  //   setUpdatingKey(key as string);
+  //   try {
+  //     // Pass the status as the request body
+  //     await updateOrderStatus({
+  //       data: { orderStatus: newStatus },
+  //       id: key as string, // Order ID
+  //     }).unwrap();
+  //     message.success("Order status updated successfully!");
+  //     refetch();
+  //   } catch (error) {
+  //     message.error("Failed to update order status.");
+  //   } finally {
+  //     setUpdatingKey(null);
+  //   }
+  // };
 
   return (
     <div className="p-6">

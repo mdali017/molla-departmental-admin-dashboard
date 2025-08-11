@@ -362,60 +362,6 @@ const ProductExcelModal = ({ open, setOpen }: ProductExcelModalProps) => {
     return [...dataColumns, actionsColumn];
   };
 
-  const handleDownloadTemplate = () => {
-    const templateData = [
-      [
-        "name",
-        "description",
-        "regular_price",
-        "offered_price",
-        "stock",
-        "category",
-        "brand",
-        "ratings",
-        "tags",
-        "reviews",
-        "isFeatured",
-        "images",
-      ],
-      [
-        "Sample Product",
-        "This is a sample product description",
-        100,
-        80,
-        50,
-        "Electronics",
-        "Sample Brand",
-        4.5,
-        "tag1, tag2, tag3",
-        "Great product with excellent quality!",
-        true,
-        "https://example.com/image1.jpg, https://example.com/image2.jpg, https://example.com/image3.jpg",
-      ],
-      [
-        "Another Product",
-        "Another sample description with more details",
-        200,
-        180,
-        30,
-        "Clothing",
-        "Another Brand",
-        4.0,
-        "fashion, style, trendy",
-        "Nice quality and comfortable to wear",
-        false,
-        "https://example.com/cloth1.jpg, https://example.com/cloth2.jpg",
-      ],
-    ];
-
-    const ws = XLSX.utils.aoa_to_sheet(templateData);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Products");
-
-    XLSX.writeFile(wb, "product_template.xlsx");
-    message.success("Template downloaded successfully!");
-  };
-
   const handleClearData = () => {
     setExcelData([]);
     setFileName("");
@@ -481,9 +427,6 @@ const ProductExcelModal = ({ open, setOpen }: ProductExcelModalProps) => {
       open={open}
       onCancel={handleModalClose}
       footer={[
-        <Button key="template" onClick={handleDownloadTemplate}>
-          Download Template
-        </Button>,
         <Button
           key="clear"
           onClick={handleClearData}
@@ -491,9 +434,7 @@ const ProductExcelModal = ({ open, setOpen }: ProductExcelModalProps) => {
         >
           Clear Data
         </Button>,
-        <Button key="cancel" onClick={handleModalClose}>
-          Close
-        </Button>,
+
         <Button
           key="import"
           type="primary"

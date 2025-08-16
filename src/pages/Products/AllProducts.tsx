@@ -3,13 +3,11 @@ import { Table, Button } from "antd";
 import { FaEdit } from "react-icons/fa";
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai"; // Import AiOutlineEye for the eye icon
 import type { TableColumnsType } from "antd";
-import {
-  useDeleteProductMutation,
-  useGetAllProductsQuery,
-} from "../../redux/api/api";
+import { useDeleteProductMutation } from "../../redux/api/api";
 import ProductDetailsModal from "../../components/common/Modals/ProductDetailsModal";
 import Swal from "sweetalert2";
 import ProductEditModal from "../../components/common/Modals/ProductEditModal";
+import { useGetAllProductsQuery } from "../../redux/services/productApi/productApi";
 
 interface DataType {
   key: React.Key;
@@ -151,7 +149,7 @@ const AllProducts: React.FC = () => {
     key: product._id,
     name: product.name,
     description: product.description.slice(0, 20),
-    price: `$${product.price.offered_price} (Reg: $${product.price.regular_price})`,
+    price: `$${product?.price?.offered_price} (Reg: $${product?.price?.regular_price})`,
     stock: product.stock,
     category: product.category,
     images: product.images.map((img: any) => img.url),

@@ -8,7 +8,7 @@ export const baseApi = createApi({
     // baseUrl: "http://localhost:5000/api/v1",
     baseUrl: "https://molla-departmental-server-new.vercel.app/api/v1",
   }),
-  tagTypes: ["Users", "Products", "Orders", "Payment"],
+  tagTypes: ["Users", "Products", "Orders", "Payment", "Category"],
   endpoints: () => ({}),
 });
 

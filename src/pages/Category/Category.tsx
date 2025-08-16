@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Table } from "antd";
 import type { TableColumnsType } from "antd";
-import { useGetAllCategoriesQuery } from "../../redux/api/api";
 import AddCategoryModal from "../../components/common/Modals/AddCategoryModal";
+import { useGetAllCategoryQuery } from "../../redux/services/categoryApi/categoryApi";
 
 interface DataType {
   key: React.Key;
@@ -18,13 +18,11 @@ const Category: React.FC = () => {
     refetch,
     isLoading,
     isError,
-  } = useGetAllCategoriesQuery(undefined);
+  } = useGetAllCategoryQuery(undefined);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
-
-
 
   if (isError) {
     return <div>Error: </div>;
@@ -88,7 +86,11 @@ const Category: React.FC = () => {
         )}
       </div>
       {modalOpen && (
-        <AddCategoryModal refetch={refetch} setModalOpen={setModalOpen} modalOpen={modalOpen} />
+        <AddCategoryModal
+          refetch={refetch}
+          setModalOpen={setModalOpen}
+          modalOpen={modalOpen}
+        />
       )}
     </>
   );

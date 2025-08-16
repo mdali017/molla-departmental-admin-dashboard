@@ -8,9 +8,20 @@ export const productApi = baseApi.injectEndpoints({
         method: "POST",
         body: productsData,
       }),
-      //   invalidatesTags: ["Users"],
+      invalidatesTags: ["Products"],
+    }),
+
+    // for get all products
+    getAllProducts: builder.query({
+      query: () => {
+        return {
+          url: `/products`,
+          method: "GET",
+        };
+      },
     }),
   }),
 });
 
-export const { useAddBulkProductImportMutation } = productApi;
+export const { useAddBulkProductImportMutation, useGetAllProductsQuery } =
+  productApi;

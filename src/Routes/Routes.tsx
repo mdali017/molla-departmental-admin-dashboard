@@ -13,45 +13,45 @@ import Login from "../pages/Login/Login";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/dashboard/",
     element: <Main />,
     children: [
       {
-        path: "/",
+        path: "",
         element: <Dashboard />,
       },
       {
-        path: "/category",
+        path: "category",
         element: <Category />,
       },
       {
-        path: "/products",
+        path: "products",
         element: <AllProducts />,
       },
       {
-        path: "/add-new-product",
+        path: "add-new-product",
         element: <AddNewProduct />,
       },
       {
-        path: "/all-orders",
+        path: "all-orders",
         element: <AllOrders />,
       },
       {
-        path: "/completed-orders",
+        path: "completed-orders",
         element: <CompletedOrders />,
       },
       {
-        path: "/processing-order",
+        path: "processing-order",
         element: <ProcessingOrder />,
       },
       {
-        path: "/canceled-orders",
+        path: "canceled-orders",
         element: <CanceledOrders />,
       },
     ],
   },
   {
-    path: "/login",
+    path: "/",
     element: <Login />,
   },
 ]);

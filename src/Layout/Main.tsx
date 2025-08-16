@@ -26,17 +26,22 @@ const Main = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const sidebar_items = [
-    { id: 1, title: "Dashboard", link: "/", icon: <FiHome size={20} /> },
+    {
+      id: 1,
+      title: "Dashboard",
+      link: "/dashboard",
+      icon: <FiHome size={20} />,
+    },
     {
       id: 2,
       title: "Products",
-      link: "",
+      link: "/dashboard",
       icon: <FiGrid size={20} />,
       subItems: [
-        { id: 21, title: "All Products", link: "/products" },
-        { id: 22, title: "Add New", link: "/add-new-product" },
-        { id: 23, title: "Categories", link: "/category" },
-        { id: 24, title: "Bulk Actions", link: "/bulk-actions" },
+        { id: 21, title: "All Products", link: "/dashboard/products" },
+        { id: 22, title: "Add New", link: "/dashboard/add-new-product" },
+        { id: 23, title: "Categories", link: "/dashboard/category" },
+        { id: 24, title: "Bulk Actions", link: "/dashboard/bulk-actions" },
       ],
     },
     {

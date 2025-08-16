@@ -20,10 +20,13 @@ import {
   EyeOutlined,
 } from "@ant-design/icons";
 import * as XLSX from "xlsx";
+import { useAddBulkProductImportMutation } from "../../../redux/services/productApi/productApi";
+import Swal from "sweetalert2";
 
 interface ProductExcelModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
+  onImport?: (products: ExcelProduct[]) => Promise<void>;
 }
 
 interface ExcelProduct {
@@ -39,13 +42,18 @@ interface ExcelProduct {
   tags?: string;
   reviews?: string;
   isFeatured?: boolean;
-  images?: string; // Comma-separated image URLs
+  images?: string;
   [key: string]: any;
 }
 
-const ProductExcelModal = ({ open, setOpen }: ProductExcelModalProps) => {
+const ProductExcelModal = ({
+  open,
+  setOpen,
+  onImport,
+}: ProductExcelModalProps) => {
   const [excelData, setExcelData] = useState<ExcelProduct[]>([]);
   const [loading, setLoading] = useState(false);
+  const [importLoading, setImportLoading] = useState(false);
   const [_fileName, setFileName] = useState<string>("");
   const [editingKey, setEditingKey] = useState<number | null>(null);
   // @ts-ignore
@@ -118,6 +126,8 @@ const ProductExcelModal = ({ open, setOpen }: ProductExcelModalProps) => {
     }
     setLoading(false);
   };
+
+  const [addBulkProductImport] = useAddBulkProductImportMutation();
 
   const beforeUpload = (file: File) => {
     const isExcel =
@@ -384,7 +394,7 @@ const ProductExcelModal = ({ open, setOpen }: ProductExcelModalProps) => {
     setOpen(false);
   };
 
-  const handleBulkImport = () => {
+  const handleBulkImport = async () => {
     if (editingKey !== null) {
       message.warning("Please save or cancel editing before importing");
       return;
@@ -408,21 +418,47 @@ const ProductExcelModal = ({ open, setOpen }: ProductExcelModalProps) => {
       return;
     }
 
-    // Here you can add logic to actually import the data
-    message.success(`Ready to import ${excelData.length} products`);
-    console.log("Products to import:", excelData);
-    // You might want to pass this data back to parent component
-    // or call an API to bulk import
+    setImportLoading(true);
+    try {
+      // Prepare data for JSON export (remove the key field used for React table)
+      const productsToImport = excelData.map(({ key, ...product }) => product);
+
+      if (onImport) {
+        await onImport(productsToImport as ExcelProduct[]);
+      } else {
+        const response = await addBulkProductImport({
+          products: productsToImport,
+          totalCount: productsToImport.length,
+          importedAt: new Date().toISOString(),
+        });
+        // console.log(response, 433);
+        if (response?.data?.success) {
+          setOpen(false);
+          await Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: `${productsToImport.length} products imported successfully.`,
+            confirmButtonText: "OK",
+            timer: 3000, // Auto-close after 3 seconds
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Import error:", error);
+      await Swal.fire({
+        icon: "error",
+        title: "Import Failed",
+        // @ts-ignore
+        text: error.message || "An error occurred during import.",
+        confirmButtonText: "Try Again",
+      });
+    } finally {
+      setImportLoading(false);
+    }
   };
 
   return (
     <Modal
-      // title={
-      //   <div className="flex items-center gap-2">
-      //     <FileExcelOutlined className="text-green-600" />
-      //     <span>Excel Product Import & Management</span>
-      //   </div>
-      // }
       centered
       open={open}
       onCancel={handleModalClose}
@@ -439,21 +475,18 @@ const ProductExcelModal = ({ open, setOpen }: ProductExcelModalProps) => {
           key="import"
           type="primary"
           disabled={excelData.length === 0 || editingKey !== null}
+          loading={importLoading}
           onClick={handleBulkImport}
         >
           Import Products ({excelData.length})
         </Button>,
       ]}
-      // @ts-ignore
-      width={{
-        xs: "95%",
-        sm: "90%",
-        md: "85%",
-        lg: "80%",
-        xl: "75%",
-        xxl: "70%",
+      width="90%"
+      style={{
+        maxWidth: "900px",
+        // top: "50%",
+        // transform: "translateY(-50%)",
       }}
-      style={{ maxWidth: "1400px" }}
       destroyOnClose
     >
       <div className="space-y-4">
@@ -497,7 +530,7 @@ const ProductExcelModal = ({ open, setOpen }: ProductExcelModalProps) => {
             <Table
               dataSource={excelData}
               columns={getTableColumns()}
-              scroll={{ x: "max-content", y: 400 }}
+              scroll={{ x: "max-content", y: 200 }}
               pagination={{
                 pageSize: 10,
                 showSizeChanger: true,
@@ -523,9 +556,9 @@ const ProductExcelModal = ({ open, setOpen }: ProductExcelModalProps) => {
             viewBox="0 0 24 24"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
             ></path>
           </svg>

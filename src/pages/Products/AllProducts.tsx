@@ -157,20 +157,20 @@ const AllProducts: React.FC = () => {
 
   return (
     <>
-      <div className="p-6">
+      <div className="">
         {/* Section Header */}
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center ">
           <h1 className="text-2xl font-semibold text-gray-800">
             All Products ({getAllProducts?.data?.length || 0})
           </h1>
         </div>
 
-        <div className="h-96 overflow-y-auto">
+        <div className="">
           {data && data.length > 0 ? (
             <Table<DataType>
               columns={columns}
               dataSource={data}
-              pagination={{ pageSize: 10 }} // Remove pagination if needed
+              pagination={{ pageSize: 5 }} // Remove pagination if needed
               // expandable={false} // Disable expandable (no "+" icons)
             />
           ) : (

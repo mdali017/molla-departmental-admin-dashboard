@@ -12,6 +12,7 @@ import {
   message,
   Alert,
   Select,
+  Card,
 } from "antd";
 import { DownloadOutlined, UploadOutlined } from "@ant-design/icons";
 import ProductExcelModal from "./ProductExcelModal/ProductExcelModal";
@@ -25,7 +26,6 @@ const AddNewProduct = () => {
   const [error, setError] = useState("");
   const [excelProductModalOpen, setExcelProductModalOpen] = useState(false);
 
-  // Transform categories for Select component
   const categoryOptions =
     categoriesResponse?.data.map((category: any) => ({
       label: category.name,
@@ -54,7 +54,7 @@ const AddNewProduct = () => {
         description: values.description,
         price: priceData,
         stock: values.stock,
-        category: values.category, // Now directly using the category ID
+        category: values.category,
         brand: values.brand,
         ratings: values.ratings,
         reviews: values.reviews || "",
@@ -80,191 +80,262 @@ const AddNewProduct = () => {
   };
 
   return (
-    <>
-      <div className="p-6 h-screen overflow-y-auto mb-6">
-        <h1 className="text-2xl font-bold mb-6">Add New Product</h1>
+    <div className="">
+      <Card
+        className="shadow-lg rounded-xl border-0"
+        bodyStyle={{ padding: 0 }}
+      >
+        <div className="p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-2xl font-bold text-gray-800">
+              Add New Product
+            </h1>
 
-        <div className="mb-6 flex justify-end">
-          <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl p-1 shadow-sm">
             <Button
-              type="text"
-              size="large"
-              icon={<DownloadOutlined className="text-emerald-600" />}
+              type="primary"
+              icon={<DownloadOutlined className="" />}
               onClick={() => setExcelProductModalOpen(true)}
-              className="text-emerald-700 hover:text-white hover:bg-gradient-to-r hover:from-emerald-500 hover:to-teal-600 transition-all duration-300 flex items-center"
+              className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 shadow-md"
               style={{
                 height: "44px",
-                paddingLeft: "20px",
-                paddingRight: "20px",
+                padding: "0 20px",
                 fontWeight: 600,
                 borderRadius: "8px",
                 display: "flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: "8px",
               }}
             >
-              <span>Export to Excel</span>
+              Export to Excel
             </Button>
           </div>
-        </div>
 
-        {error && (
-          <Alert
-            message="Error"
-            description={error}
-            type="error"
-            showIcon
-            className="mb-6"
-          />
-        )}
+          {error && (
+            <Alert
+              message="Error"
+              description={error}
+              type="error"
+              showIcon
+              className="mb-6 rounded-lg"
+            />
+          )}
 
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={handleSubmit}
-          initialValues={{ isFeatured: false }}
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4">
-            <Form.Item
-              name="name"
-              label="Product Name"
-              rules={[
-                { required: true, message: "Please enter the product name" },
-              ]}
-            >
-              <Input className="h-10" placeholder="Enter product name" />
-            </Form.Item>
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={handleSubmit}
+            initialValues={{ isFeatured: false }}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Column 1 */}
+              <div className="space-y-4">
+                <Card className="shadow-sm p-4 rounded-lg">
+                  <Form.Item
+                    name="name"
+                    label={<span className="font-medium">Product Name</span>}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter the product name",
+                      },
+                    ]}
+                  >
+                    <Input
+                      className="h-10 rounded-lg"
+                      placeholder="Enter product name"
+                    />
+                  </Form.Item>
 
-            <Form.Item
-              name="regular_price"
-              label="Regular Price"
-              rules={[
-                { required: true, message: "Please enter the regular price" },
-              ]}
-            >
-              <InputNumber
-                style={{ width: "100%" }}
-                min={0}
-                placeholder="Enter regular price"
-                className="h-10"
-              />
-            </Form.Item>
+                  <Form.Item
+                    name="regular_price"
+                    label={<span className="font-medium">Regular Price</span>}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter the regular price",
+                      },
+                    ]}
+                  >
+                    <InputNumber
+                      style={{ width: "100%" }}
+                      min={0}
+                      placeholder="Enter regular price"
+                      className="h-10 rounded-lg"
+                    />
+                  </Form.Item>
 
-            <Form.Item name="offered_price" label="Offered Price">
-              <InputNumber
-                style={{ width: "100%" }}
-                min={0}
-                placeholder="Enter offered price"
-              />
-            </Form.Item>
+                  <Form.Item
+                    name="offered_price"
+                    label={<span className="font-medium">Offered Price</span>}
+                  >
+                    <InputNumber
+                      style={{ width: "100%" }}
+                      min={0}
+                      placeholder="Enter offered price"
+                      className="rounded-lg"
+                    />
+                  </Form.Item>
 
-            <Form.Item
-              name="stock"
-              label="Stock Quantity"
-              rules={[
-                { required: true, message: "Please enter the stock quantity" },
-              ]}
-            >
-              <InputNumber
-                style={{ width: "100%" }}
-                min={0}
-                placeholder="Enter stock quantity"
-              />
-            </Form.Item>
+                  <Form.Item
+                    name="stock"
+                    label={<span className="font-medium">Stock Quantity</span>}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter the stock quantity",
+                      },
+                    ]}
+                  >
+                    <InputNumber
+                      style={{ width: "100%" }}
+                      min={0}
+                      placeholder="Enter stock quantity"
+                      className="rounded-lg"
+                    />
+                  </Form.Item>
+                </Card>
 
-            <Form.Item
-              name="category"
-              label="Category"
-              rules={[{ required: true, message: "Please select a category" }]}
-            >
-              <Select
-                options={categoryOptions}
-                placeholder="Select a category"
-                loading={categoriesLoading}
-              />
-            </Form.Item>
+                <Card className="shadow-sm p-4 rounded-lg">
+                  <Form.Item
+                    name="description"
+                    label={<span className="font-medium">Description</span>}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter the description",
+                      },
+                    ]}
+                  >
+                    <Input.TextArea
+                      rows={4}
+                      placeholder="Enter product description"
+                      className="rounded-lg"
+                    />
+                  </Form.Item>
+                </Card>
+              </div>
 
-            <Form.Item
-              name="brand"
-              label="Brand"
-              rules={[{ required: true, message: "Please enter the brand" }]}
-            >
-              <Input placeholder="Enter brand name" />
-            </Form.Item>
+              {/* Column 2 */}
+              <div className="space-y-4">
+                <Card className="shadow-sm p-4 rounded-lg">
+                  <Form.Item
+                    name="category"
+                    label={<span className="font-medium">Category</span>}
+                    rules={[
+                      { required: true, message: "Please select a category" },
+                    ]}
+                  >
+                    <Select
+                      options={categoryOptions}
+                      placeholder="Select a category"
+                      loading={categoriesLoading}
+                      className="rounded-lg"
+                    />
+                  </Form.Item>
 
-            <Form.Item
-              name="ratings"
-              label="Ratings"
-              rules={[{ required: true, message: "Please enter the ratings" }]}
-            >
-              <InputNumber
-                style={{ width: "100%" }}
-                min={0}
-                max={5}
-                step={0.1}
-                placeholder="Enter ratings"
-              />
-            </Form.Item>
+                  <Form.Item
+                    name="brand"
+                    label={<span className="font-medium">Brand</span>}
+                    rules={[
+                      { required: true, message: "Please enter the brand" },
+                    ]}
+                  >
+                    <Input
+                      placeholder="Enter brand name"
+                      className="rounded-lg"
+                    />
+                  </Form.Item>
 
-            <Form.Item name="tags" label="Tags">
-              <Input placeholder="Enter tags (comma separated)" />
-            </Form.Item>
+                  <Form.Item
+                    name="ratings"
+                    label={<span className="font-medium">Ratings</span>}
+                    rules={[
+                      { required: true, message: "Please enter the ratings" },
+                    ]}
+                  >
+                    <InputNumber
+                      style={{ width: "100%" }}
+                      min={0}
+                      max={5}
+                      step={0.1}
+                      placeholder="Enter ratings"
+                      className="rounded-lg"
+                    />
+                  </Form.Item>
 
-            <Form.Item
-              name="description"
-              label="Description"
-              rules={[
-                { required: true, message: "Please enter the description" },
-              ]}
-            >
-              <Input.TextArea
-                rows={4}
-                placeholder="Enter product description"
-              />
-            </Form.Item>
+                  <Form.Item
+                    name="tags"
+                    label={<span className="font-medium">Tags</span>}
+                  >
+                    <Input
+                      placeholder="Enter tags (comma separated)"
+                      className="rounded-lg"
+                    />
+                  </Form.Item>
+                </Card>
 
-            <Form.Item name="reviews" label="Reviews">
-              <Input.TextArea rows={4} placeholder="Enter reviews" />
-            </Form.Item>
+                <Card className="shadow-sm p-4 rounded-lg">
+                  <Form.Item
+                    name="reviews"
+                    label={<span className="font-medium">Reviews</span>}
+                  >
+                    <Input.TextArea
+                      rows={4}
+                      placeholder="Enter reviews"
+                      className="rounded-lg"
+                    />
+                  </Form.Item>
+                </Card>
 
-            <Form.Item name="images" label="Product Images">
-              <Upload
-                listType="picture-card"
-                fileList={fileList}
-                onChange={handleImageChange}
-                beforeUpload={() => false}
-                multiple
-                maxCount={5}
+                <Card className="shadow-sm p-4 rounded-lg">
+                  <Form.Item
+                    name="images"
+                    label={<span className="font-medium">Product Images</span>}
+                  >
+                    <Upload
+                      listType="picture-card"
+                      fileList={fileList}
+                      onChange={handleImageChange}
+                      beforeUpload={() => false}
+                      multiple
+                      maxCount={5}
+                      className="rounded-lg"
+                    >
+                      {fileList.length < 5 && (
+                        <div className="flex flex-col items-center">
+                          <UploadOutlined className="text-lg" />
+                          <div className="mt-2 text-sm">Upload</div>
+                        </div>
+                      )}
+                    </Upload>
+                  </Form.Item>
+                </Card>
+              </div>
+            </div>
+
+            <div className="mt-8">
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={isLoading}
+                className="w-full h-12 rounded-lg shadow-md bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
+                size="large"
               >
-                {fileList.length < 5 && (
-                  <div>
-                    <UploadOutlined />
-                    <div className="mt-2">Upload</div>
-                  </div>
-                )}
-              </Upload>
-            </Form.Item>
-          </div>
+                {isLoading ? "Adding Product..." : "Add Product"}
+              </Button>
+            </div>
+          </Form>
+        </div>
+      </Card>
 
-          <Form.Item className="mb-20">
-            <Button
-              type="primary"
-              htmlType="submit"
-              loading={isLoading}
-              style={{ width: "100%", height: "40px" }}
-            >
-              {isLoading ? "Adding Product..." : "Add Product"}
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
       {excelProductModalOpen && (
         <ProductExcelModal
           open={excelProductModalOpen}
           setOpen={setExcelProductModalOpen}
         />
       )}
-    </>
+    </div>
   );
 };
 
